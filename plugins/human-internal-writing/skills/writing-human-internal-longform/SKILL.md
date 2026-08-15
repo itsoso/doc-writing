@@ -1,6 +1,6 @@
 ---
 name: writing-human-internal-longform
-description: Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, or drafts that feel generic, templated, repetitive, over-polished, or weakly connected to action.
+description: Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested.
 ---
 
 # Writing Human Internal Longform
@@ -30,6 +30,12 @@ Identify these before drafting:
 5. **Form** — intended length, tone, channel, and required output files.
 
 If the user provides several source documents, process all relevant material before writing. Do not infer that the latest or longest source is the most important.
+
+## Use OnePoint only for Kuaishou-internal requests
+
+The writing method in this Skill is general and does not require OnePoint. Read [references/onepoint-kuaishou.md](references/onepoint-kuaishou.md) only when the user explicitly provides a Kuaishou OnePoint meeting link, asks to retrieve a meeting from OnePoint, or clearly identifies the task as Kuaishou-internal.
+
+Do not load or apply that reference to generic meeting notes, external organizations, or unrelated products named OnePoint. If the internal CLI, network, login, or meeting permission is unavailable, ask for an authorized transcript or export and continue with the general workflow. Never bypass access controls.
 
 ## Follow the seven-stage workflow
 

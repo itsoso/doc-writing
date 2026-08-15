@@ -42,6 +42,20 @@ Skill 将写作分成七个阶段：
 6. 删除空洞排比、机械标签、重复总结与抽象词堆叠；
 7. 通过来源、声音、论证、行动和阅读节奏五道发布门禁。
 
+## OnePoint（仅限快手内部）
+
+Skill 的通用写作能力不依赖 OnePoint。任何组织都可以直接使用会议文本、访谈、笔记或草稿完成长文写作。
+
+插件同时提供一份条件加载的 OnePoint 参考，仅适用于快手公司内部、具备相应网络和会议权限的用户。当任务明确包含快手 OnePoint 会议链接或要求从 OnePoint 读取会议时，Skill 会先按公司内部规范确认 CLI 与登录状态，再读取会议摘要、行动项、ASR 和关联文档，最后回到同一套通用写作流程。
+
+快手内部用户应以[OnePoint CLI 授权文档](https://bs3-hb1.corp.kuaishou.com/kwaishop-langbridge-evaluation/onepointcli.md)为准。最小会议读取方式为：
+
+```bash
+onepoint meeting view <meetingId> --full --output compact_json
+```
+
+OnePoint 会议链接、真实 meetingId、完整 ASR、参会人信息和内部业务内容不得写入公共仓库。外部用户或无权访问 OnePoint 的用户，可以提供已授权的会议文本或导出材料；Skill 的其余能力不受影响。
+
 ## 草稿检查器
 
 检查器只使用 Python 标准库，不会联网，也不会修改原文：
@@ -58,8 +72,11 @@ python3 plugins/human-internal-writing/skills/writing-human-internal-longform/sc
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 \
   plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_check_draft.py -v
+
+PYTHONDONTWRITEBYTECODE=1 python3 \
+  plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_skill_contract.py -v
 ```
 
 ## 数据边界
 
-仓库不包含会议原文、内部链接、人员信息或真实发布文章。示例全部为合成内容。处理内部材料时，请在获得授权的工作区中操作，并遵守所在组织的数据与发布规范。
+除上面的 OnePoint 官方授权文档入口外，仓库不包含会议原文、具体会议链接、人员信息或真实发布文章。示例全部为合成内容。处理内部材料时，请在获得授权的工作区中操作，并遵守所在组织的数据与发布规范。
