@@ -1,0 +1,24 @@
+{
+  "name": "human-internal-writing",
+  "version": "0.1.0",
+  "description": "Turn source-faithful viewpoints into restrained, credible, actionable internal long-form writing.",
+  "author": {
+    "name": "KStack Team"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Human Internal Writing",
+    "shortDescription": "Write source-faithful internal long-form without generic AI phrasing.",
+    "longDescription": "Transform meeting notes, interviews, leadership viewpoints, and rough drafts into restrained internal articles with traceable claims, a distinctive human voice, and concrete action. Includes an explainable editorial checker; it is not an AI-content detector.",
+    "developerName": "KStack Team",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Turn these meeting notes into a restrained internal article.",
+      "Preserve my viewpoint while removing generic AI phrasing.",
+      "Cold-read this team letter and strengthen its action path."
+    ]
+  }
+}

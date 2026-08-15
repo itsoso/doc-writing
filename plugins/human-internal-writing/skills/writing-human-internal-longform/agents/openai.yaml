@@ -1,0 +1,6 @@
+interface:
+  display_name: "Human Internal Longform"
+  short_description: "将真实材料与个人观点整理为克制、可信且可行动的内部长文"
+  default_prompt: "Use $writing-human-internal-longform to turn these source materials into a restrained internal long-form article."
+policy:
+  allow_implicit_invocation: true

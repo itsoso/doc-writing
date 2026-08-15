@@ -1,0 +1,20 @@
+{
+  "name": "doc-writing",
+  "interface": {
+    "displayName": "Doc Writing"
+  },
+  "plugins": [
+    {
+      "name": "human-internal-writing",
+      "source": {
+        "source": "local",
+        "path": "./plugins/human-internal-writing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
