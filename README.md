@@ -42,6 +42,16 @@ Skill 将写作分成七个阶段：
 6. 删除空洞排比、机械标签、重复总结与抽象词堆叠；
 7. 通过来源、声音、论证、行动和阅读节奏五道发布门禁。
 
+## 交付物契约
+
+Skill 治理编辑质量，也治理发布时的交付物形态。任何使用该 Skill 的 agent（Codex、WorkBuddy、DSH 等）在执行发布或归档时，必须同时产出并保持对齐：
+
+- **Markdown 源文件**：可编辑的事实源，存入目标仓库，所有后续修改只发生在这一份上；
+- **WordPress 兼容 doc（HTML 片段）**：从 Markdown 生成，与源文件同目录；仅使用 WordPress 保留的块级标签（`h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`），无 `style`/`script`/内联样式/类属性，无文档级包裹，标题 H1 作为文章题目不在正文重复，正文从 `h2` 起；
+- **索引更新**：目标仓库有 README 或索引时，在同一变更集内更新条目。
+
+一致性规则：HTML 片段是派生产物——Markdown 变更必须在同一提交内重新生成片段，不允许手改 HTML。仅请求对话内评审（无发布或归档）时，单独交付 Markdown 即可。
+
 ## OnePoint（仅限快手内部）
 
 Skill 的通用写作能力不依赖 OnePoint。任何组织都可以直接使用会议文本、访谈、笔记或草稿完成长文写作。

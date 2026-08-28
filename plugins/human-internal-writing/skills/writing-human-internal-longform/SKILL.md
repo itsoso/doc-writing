@@ -1,6 +1,6 @@
 ---
 name: writing-human-internal-longform
-description: Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested.
+description: Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested. Also governs publish artifacts: when publishing or archiving, produce the Markdown source plus a WordPress-compatible HTML doc and update the repository index.
 ---
 
 # Writing Human Internal Longform
@@ -143,6 +143,23 @@ Lead with the finished article when the user asks for a draft, not a long explan
 
 When files are requested, keep the editable source and the release artifact aligned. Verify layout separately when generating DOCX or PDF; this Skill governs editorial quality, not file-format rendering.
 
+## Output artifacts contract
+
+Editorial quality governs the writing; this contract governs the deliverables. When the task involves publishing or archiving, produce and keep aligned the following artifacts. Agents using this Skill (Codex, WorkBuddy, DSH, or any other) MUST NOT deliver only one format when a publish step is requested.
+
+1. **Markdown source** — the editable source of record, stored in the target repository (for example `articles/<topic>/<version>/<title>.md`). All future edits happen here.
+
+2. **WordPress-compatible doc** — an HTML fragment generated from the Markdown source, in the same directory and alongside the Markdown file whenever a repo publish or web publish is requested:
+   - One standalone `.html` file per article, UTF-8, no `<!DOCTYPE>`/`<html>`/`<head>`/`<body>` wrapper — a fragment ready to paste into the WordPress code editor or import via a converter.
+   - Use only block-level tags WordPress preserves: `h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`. No `<style>`, no `<script>`, no inline `style` attributes, no class attributes, no web fonts.
+   - Images referenced with plain `src` URLs; no `figure`/`figcaption` wrappers (use `p` + `em` captions if needed).
+   - No YAML front matter, no HTML comments, no shortcodes.
+   - The H1 of the Markdown becomes the WordPress post title and is not repeated inside the body; body headings start at `h2`.
+
+3. **Index update** — when the target repository has a README or index, add or update the entry in the same change set.
+
+Consistency rule: the HTML fragment is derived output. If the Markdown changes, regenerate the fragment in the same commit; never hand-edit the HTML. When only a chat review is requested (no publish/archive), the Markdown alone is sufficient.
+
 ## Stop conditions
 
 Do not declare the article ready when any of these remain:
@@ -152,4 +169,5 @@ Do not declare the article ready when any of these remain:
 - the reader is asked to “act” without a first step or responsibility boundary;
 - risks are absent from a consequential proposal;
 - the draft passes a checker only because valid ideas were removed;
-- confidential content has leaked into reusable plugin resources.
+- confidential content has leaked into reusable plugin resources;
+- a publish step was requested but only the Markdown was produced, without the WordPress-compatible doc and index update.
