@@ -1,6 +1,6 @@
 ---
 name: writing-human-internal-longform
-description: Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested. Also governs publish artifacts: when publishing or archiving, produce the Markdown source plus a WordPress-compatible HTML doc and update the repository index.
+description: "Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested. Also governs publish artifacts: when publishing or archiving, produce the Markdown source plus a WordPress-compatible HTML doc and update the repository index."
 ---
 
 # Writing Human Internal Longform
