@@ -143,6 +143,12 @@ Lead with the finished article when the user asks for a draft, not a long explan
 
 When files are requested, keep the editable source and the release artifact aligned. Verify layout separately when generating DOCX or PDF; this Skill governs editorial quality, not file-format rendering.
 
+### Use an exact publication date
+
+Every article title must contain its publication date in `YYYY 年 M 月 D 日` form. A year-month value such as `2026 年 8 月` is incomplete and must not ship. Use the user-specified publication date. Otherwise resolve the date in the user's configured publication timezone; for this workflow the default is `Asia/Shanghai` (北京时间, UTC+8), never the host or workspace timezone.
+
+Keep the same exact date in the Markdown H1, DOCX/PDF cover and document title metadata, and any release index entry. The filename may remain stable when changing it would break an existing published link.
+
 ## Output artifacts contract
 
 Editorial quality governs the writing; this contract governs the deliverables. When the task involves publishing or archiving, produce and keep aligned the following artifacts. Agents using this Skill (Codex, WorkBuddy, DSH, or any other) MUST NOT deliver only one format when a publish step is requested.
@@ -171,3 +177,4 @@ Do not declare the article ready when any of these remain:
 - the draft passes a checker only because valid ideas were removed;
 - confidential content has leaked into reusable plugin resources;
 - a publish step was requested but only the Markdown was produced, without the WordPress-compatible doc and index update.
+- the article title or release artifact contains only a month instead of an exact publication date.

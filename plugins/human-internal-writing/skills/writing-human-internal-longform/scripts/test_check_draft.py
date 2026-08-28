@@ -14,7 +14,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 from check_draft import analyze  # noqa: E402
 
 
-WEAK_DRAFT = """# AI 转型共识
+WEAK_DRAFT = """# AI 转型共识｜2026 年 8 月 27 日
 
 一句话带走｜我们必须全面拥抱变化。
 
@@ -26,7 +26,7 @@ WEAK_DRAFT = """# AI 转型共识
 """
 
 
-STRONG_DRAFT = """# 从一次售后失败开始改进购物助手
+STRONG_DRAFT = """# 从一次售后失败开始改进购物助手｜2026 年 8 月 27 日
 
 上周三，五名试用同学让购物助手寻找两百元以内、周五前送达的通勤鞋。助手推荐了商品，却没有检查配送时间，其中两人到结算页才发现无法按时送达。
 
@@ -37,6 +37,31 @@ STRONG_DRAFT = """# 从一次售后失败开始改进购物助手
 
 
 class AnalyzeDraftTests(unittest.TestCase):
+    def test_month_only_article_title_is_blocked(self) -> None:
+        month_only = """# 耐心的物理学：从 276 毫秒到 1.7 万 DAU｜2026 年 8 月
+
+下一步从真实用户链路开始，明确风险、边界和回滚条件。
+"""
+
+        finding = next(
+            item
+            for item in analyze(month_only)
+            if item.rule == "missing-exact-publication-date"
+        )
+
+        self.assertEqual("blocker", finding.severity)
+        self.assertEqual(1, finding.line)
+
+    def test_full_article_title_date_passes_date_rule(self) -> None:
+        exact_date = """# 耐心的物理学：从 276 毫秒到 1.7 万 DAU｜2026 年 8 月 27 日
+
+下一步从真实用户链路开始，明确风险、边界和回滚条件。
+"""
+
+        rules = {finding.rule for finding in analyze(exact_date)}
+
+        self.assertNotIn("missing-exact-publication-date", rules)
+
     def test_template_heavy_draft_produces_named_findings(self) -> None:
         rules = {finding.rule for finding in analyze(WEAK_DRAFT)}
 

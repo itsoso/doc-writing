@@ -13,6 +13,7 @@ import re
 import statistics
 import sys
 from dataclasses import asdict, dataclass
+from datetime import date
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -89,6 +90,12 @@ RISK_MARKERS = (
     "限制",
 )
 
+EXACT_PUBLICATION_DATE = re.compile(
+    r"(?P<year>(?:19|20)\d{2})\s*年\s*"
+    r"(?P<month>0?[1-9]|1[0-2])\s*月\s*"
+    r"(?P<day>0?[1-9]|[12]\d|3[01])\s*日"
+)
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -143,10 +150,39 @@ def _compact(value: str) -> str:
     return re.sub(r"[\W_]+", "", value, flags=re.UNICODE)
 
 
+def _has_valid_exact_publication_date(title: str) -> bool:
+    for match in EXACT_PUBLICATION_DATE.finditer(title):
+        try:
+            date(
+                int(match.group("year")),
+                int(match.group("month")),
+                int(match.group("day")),
+            )
+        except ValueError:
+            continue
+        return True
+    return False
+
+
 def analyze(text: str) -> list[Finding]:
     findings: list[Finding] = []
     lines = text.splitlines()
     paragraphs = _plain_paragraphs(text)
+
+    title = next(
+        ((index, line[2:].strip()) for index, line in enumerate(lines, start=1) if line.startswith("# ")),
+        None,
+    )
+    if title is None or not _has_valid_exact_publication_date(title[1]):
+        findings.append(
+            Finding(
+                rule="missing-exact-publication-date",
+                severity="blocker",
+                line=title[0] if title else 1,
+                message="文章标题必须包含精确到日的发布日期（YYYY 年 M 月 D 日）。",
+                evidence=title[1] if title else "未发现 Markdown H1",
+            )
+        )
 
     for label in STOCK_LABELS:
         occurrences = [index for index, line in enumerate(lines, start=1) if label in line]
