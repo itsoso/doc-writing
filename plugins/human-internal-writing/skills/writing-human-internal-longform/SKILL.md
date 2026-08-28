@@ -182,9 +182,5 @@ Do not declare the article ready when any of these remain:
 - risks are absent from a consequential proposal;
 - the draft passes a checker only because valid ideas were removed;
 - confidential content has leaked into reusable plugin resources;
-<<<<<<< HEAD
-- a publish step was requested but only the Markdown was produced, without the WordPress-compatible doc and index update.
+- a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update;
 - the article title or release artifact contains only a month instead of an exact publication date.
-=======
-- a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update.
->>>>>>> f98459b (docs: make Word/WPS docx the default doc format in output contract)
