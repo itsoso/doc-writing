@@ -184,6 +184,17 @@ def analyze(text: str) -> list[Finding]:
             )
         )
 
+    if title is not None and re.search(r"北京时间|UTC\s*\+?8|Asia/Shanghai", title[1], re.IGNORECASE):
+        findings.append(
+            Finding(
+                rule="visible-publication-timezone",
+                severity="blocker",
+                line=title[0],
+                message="发布时区只用于计算日期，不应显示在文章标题中。",
+                evidence=title[1],
+            )
+        )
+
     for label in STOCK_LABELS:
         occurrences = [index for index, line in enumerate(lines, start=1) if label in line]
         if len(occurrences) >= 2:

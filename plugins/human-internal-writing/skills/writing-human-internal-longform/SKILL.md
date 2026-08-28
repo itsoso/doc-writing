@@ -147,6 +147,8 @@ When files are requested, keep the editable source and the release artifact alig
 
 Every article title must contain its publication date in `YYYY 年 M 月 D 日` form. A year-month value such as `2026 年 8 月` is incomplete and must not ship. Use the user-specified publication date. Otherwise resolve the date in the user's configured publication timezone; for this workflow the default is `Asia/Shanghai` (北京时间, UTC+8), never the host or workspace timezone.
 
+The timezone is calculation context only and must not appear in the visible title, cover date, or release index. Render only the date, for example `2026 年 8 月 28 日`, never `2026 年 8 月 28 日 · 北京时间` or another timezone suffix.
+
 Keep the same exact date in the Markdown H1, DOCX/PDF cover and document title metadata, and any release index entry. The filename may remain stable when changing it would break an existing published link.
 
 ## Output artifacts contract
@@ -184,3 +186,4 @@ Do not declare the article ready when any of these remain:
 - confidential content has leaked into reusable plugin resources;
 - a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update;
 - the article title or release artifact contains only a month instead of an exact publication date.
+- a visible title, cover date, or release index appends a timezone label such as `北京时间`, `UTC+8`, or `Asia/Shanghai`.

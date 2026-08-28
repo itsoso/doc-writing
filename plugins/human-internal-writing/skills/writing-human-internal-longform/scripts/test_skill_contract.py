@@ -65,6 +65,11 @@ class OnePointBoundaryContractTests(unittest.TestCase):
         self.assertIn("OnePoint（仅限快手内部）", self.readme_text)
         self.assertIn("Skill 的通用写作能力不依赖 OnePoint", self.readme_text)
 
+    def test_publication_timezone_is_not_rendered_in_visible_date_text(self) -> None:
+        self.assertIn("must not appear in the visible title", self.skill_text)
+        self.assertIn("Render only the date", self.skill_text)
+        self.assertIn("timezone suffix", self.skill_text)
+
 
 if __name__ == "__main__":
     unittest.main()

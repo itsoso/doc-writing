@@ -62,6 +62,21 @@ class AnalyzeDraftTests(unittest.TestCase):
 
         self.assertNotIn("missing-exact-publication-date", rules)
 
+    def test_visible_timezone_label_in_title_is_blocked(self) -> None:
+        labeled_date = """# 突击之后｜2026 年 8 月 28 日 · 北京时间
+
+下一步从真实用户链路开始，明确风险、边界和回滚条件。
+"""
+
+        finding = next(
+            item
+            for item in analyze(labeled_date)
+            if item.rule == "visible-publication-timezone"
+        )
+
+        self.assertEqual("blocker", finding.severity)
+        self.assertEqual(1, finding.line)
+
     def test_template_heavy_draft_produces_named_findings(self) -> None:
         rules = {finding.rule for finding in analyze(WEAK_DRAFT)}
 
