@@ -1,6 +1,6 @@
 ---
 name: writing-human-internal-longform
-description: "Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested. Also governs publish artifacts: when publishing or archiving, produce the Markdown source plus a WordPress-compatible HTML doc and update the repository index."
+description: "Use when turning meeting notes, interviews, leadership viewpoints, or rough drafts into internal long-form writing, including all-hands letters, consensus documents, transformation articles, newcomer communications, drafts that feel generic or templated, and Kuaishou-internal OnePoint meeting sources when explicitly requested. Also governs publish artifacts: when publishing or archiving, produce the Markdown source plus a Word/WPS-compatible .docx and update the repository index; add a WordPress-compatible HTML fragment for web publishing."
 ---
 
 # Writing Human Internal Longform
@@ -155,16 +155,22 @@ Editorial quality governs the writing; this contract governs the deliverables. W
 
 1. **Markdown source** — the editable source of record, stored in the target repository (for example `articles/<topic>/<version>/<title>.md`). All future edits happen here.
 
-2. **WordPress-compatible doc** — an HTML fragment generated from the Markdown source, in the same directory and alongside the Markdown file whenever a repo publish or web publish is requested:
+2. **Word/WPS-compatible doc (`.docx`)** — the default document format for sharing and review, generated from the Markdown source, in the same directory and alongside the Markdown file whenever a publish or archive step is requested:
+   - One standalone `.docx` per article, opened correctly by both Microsoft Word and WPS Office.
+   - Generate with pandoc: `pandoc <article>.md -o <article>.docx --toc-depth=2 -M lang=zh-CN`.
+   - The H1 of the Markdown becomes the document title; body headings start at `h2`. Chinese text renders with the default theme fonts; do not embed custom fonts.
+   - Images referenced by relative path in the Markdown resolve from the Markdown file's directory; keep them working in the `.docx`.
+
+3. **WordPress-compatible HTML fragment** (optional, web publish only) — an HTML fragment generated from the same Markdown source:
    - One standalone `.html` file per article, UTF-8, no `<!DOCTYPE>`/`<html>`/`<head>`/`<body>` wrapper — a fragment ready to paste into the WordPress code editor or import via a converter.
    - Use only block-level tags WordPress preserves: `h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`. No `<style>`, no `<script>`, no inline `style` attributes, no class attributes, no web fonts.
    - Images referenced with plain `src` URLs; no `figure`/`figcaption` wrappers (use `p` + `em` captions if needed).
    - No YAML front matter, no HTML comments, no shortcodes.
    - The H1 of the Markdown becomes the WordPress post title and is not repeated inside the body; body headings start at `h2`.
 
-3. **Index update** — when the target repository has a README or index, add or update the entry in the same change set.
+4. **Index update** — when the target repository has a README or index, add or update the entry in the same change set.
 
-Consistency rule: the HTML fragment is derived output. If the Markdown changes, regenerate the fragment in the same commit; never hand-edit the HTML. When only a chat review is requested (no publish/archive), the Markdown alone is sufficient.
+Consistency rule: the `.docx` and HTML fragment are derived output. If the Markdown changes, regenerate them in the same commit; never hand-edit the derived files. When only a chat review is requested (no publish/archive), the Markdown alone is sufficient.
 
 ## Stop conditions
 
@@ -176,5 +182,9 @@ Do not declare the article ready when any of these remain:
 - risks are absent from a consequential proposal;
 - the draft passes a checker only because valid ideas were removed;
 - confidential content has leaked into reusable plugin resources;
+<<<<<<< HEAD
 - a publish step was requested but only the Markdown was produced, without the WordPress-compatible doc and index update.
 - the article title or release artifact contains only a month instead of an exact publication date.
+=======
+- a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update.
+>>>>>>> f98459b (docs: make Word/WPS docx the default doc format in output contract)

@@ -47,10 +47,11 @@ Skill 将写作分成七个阶段：
 Skill 治理编辑质量，也治理发布时的交付物形态。任何使用该 Skill 的 agent（Codex、WorkBuddy、DSH 等）在执行发布或归档时，必须同时产出并保持对齐：
 
 - **Markdown 源文件**：可编辑的事实源，存入目标仓库，所有后续修改只发生在这一份上；
-- **WordPress 兼容 doc（HTML 片段）**：从 Markdown 生成，与源文件同目录；仅使用 WordPress 保留的块级标签（`h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`），无 `style`/`script`/内联样式/类属性，无文档级包裹，标题 H1 作为文章题目不在正文重复，正文从 `h2` 起；
+- **Word/WPS 兼容 doc（`.docx`）**：默认分享与评审格式，从 Markdown 用 pandoc 生成（`pandoc <article>.md -o <article>.docx --toc-depth=2 -M lang=zh-CN`），与源文件同目录，Word 和 WPS 均可正确打开，H1 为文档标题、正文从 `h2` 起；
+- **WordPress 兼容 HTML 片段**（可选，仅 web 发布时）：从 Markdown 生成，仅使用 WordPress 保留的块级标签（`h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`），无 `style`/`script`/内联样式/类属性，无文档级包裹，标题 H1 作为文章题目不在正文重复，正文从 `h2` 起；
 - **索引更新**：目标仓库有 README 或索引时，在同一变更集内更新条目。
 
-一致性规则：HTML 片段是派生产物——Markdown 变更必须在同一提交内重新生成片段，不允许手改 HTML。仅请求对话内评审（无发布或归档）时，单独交付 Markdown 即可。
+一致性规则：`.docx` 与 HTML 片段均为派生产物——Markdown 变更必须在同一提交内重新生成，不允许手改。仅请求对话内评审（无发布或归档）时，单独交付 Markdown 即可。
 
 ## OnePoint（仅限快手内部）
 
