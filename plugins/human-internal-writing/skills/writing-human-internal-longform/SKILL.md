@@ -167,13 +167,23 @@ Lead with the finished article when the user asks for a draft, not a long explan
 
 When files are requested, keep the editable source and the release artifact aligned. Verify layout separately when generating DOCX or PDF; this Skill governs editorial quality, not file-format rendering.
 
-### Use an exact publication date
+### Use a three-line formal masthead and an exact publication date
 
-Every article title must contain its publication date in `YYYY 年 M 月 D 日` form. A year-month value such as `2026 年 8 月` is incomplete and must not ship. Use the user-specified publication date. Otherwise resolve the date in the user's configured publication timezone; for this workflow the default is `Asia/Shanghai` (北京时间, UTC+8), never the host or workspace timezone.
+For a formal article, default to three separate visual lines:
 
-The timezone is calculation context only and must not appear in the visible title, cover date, or release index. Render only the date, for example `2026 年 8 月 28 日`, never `2026 年 8 月 28 日 · 北京时间` or another timezone suffix.
+```markdown
+# Main title
 
-Keep the same exact date in the Markdown H1, DOCX/PDF cover and document title metadata, and any release index entry. The filename may remain stable when changing it would break an existing published link.
+> Subtitle
+
+2026 年 8 月 30 日
+```
+
+The H1 must not contain the subtitle, date, or `｜`. The main title carries the central judgment; the subtitle adds a distinct conflict, scope, or consequence; the date is a quiet metadata line. These are three separate visual lines in Markdown, DOCX/PDF, and online Docs. Do not compress them into `Main title: Subtitle｜Date`.
+
+The publication date must use `YYYY 年 M 月 D 日` form. A year-month value such as `2026 年 8 月` is incomplete and must not ship. Use the user-specified date; otherwise resolve it in the user's configured publication timezone, defaulting to `Asia/Shanghai` (北京时间, UTC+8), never the host timezone.
+
+The timezone is calculation context only and must not appear in the visible masthead, cover date, or release index. Render only the date, for example `2026 年 8 月 28 日`, never a timezone suffix. Keep the exact date consistent across channels, but outside the H1 and document-title metadata. In an index, use the main title as link text and put the date in a separate field or column. Preserve an existing filename only when changing it would break a published link.
 
 ## Output artifacts contract
 
@@ -184,7 +194,7 @@ Editorial quality governs the writing; this contract governs the deliverables. W
 2. **Word/WPS-compatible doc (`.docx`)** — the default document format for sharing and review, generated from the Markdown source, in the same directory and alongside the Markdown file whenever a publish or archive step is requested:
    - One standalone `.docx` per article, opened correctly by both Microsoft Word and WPS Office.
    - Generate with pandoc: `pandoc <article>.md -o <article>.docx --toc-depth=2 -M lang=zh-CN`.
-   - The H1 of the Markdown becomes the document title; body headings start at `h2`. Chinese text renders with the default theme fonts; do not embed custom fonts.
+   - The H1 becomes the document title and metadata title. Render the subtitle and date as separate cover paragraphs below it; body headings start at `h2`. Chinese text renders with the default theme fonts; do not embed custom fonts.
    - Images referenced by relative path in the Markdown resolve from the Markdown file's directory; keep them working in the `.docx`.
 
 3. **WordPress-compatible HTML fragment** (optional, web publish only) — an HTML fragment generated from the same Markdown source:
@@ -192,7 +202,7 @@ Editorial quality governs the writing; this contract governs the deliverables. W
    - Use only block-level tags WordPress preserves: `h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`. No `<style>`, no `<script>`, no inline `style` attributes, no class attributes, no web fonts.
    - Images referenced with plain `src` URLs; no `figure`/`figcaption` wrappers (use `p` + `em` captions if needed).
    - No YAML front matter, no HTML comments, no shortcodes.
-   - The H1 of the Markdown becomes the WordPress post title and is not repeated inside the body; body headings start at `h2`.
+   - The H1 becomes the WordPress post title. Keep the subtitle and date as separate introductory blocks; body headings start at `h2`.
 
 4. **Index update** — when the target repository has a README or index, add or update the entry in the same change set.
 
@@ -209,7 +219,8 @@ Do not declare the article ready when any of these remain:
 - the draft passes a checker only because valid ideas were removed;
 - confidential content has leaked into reusable plugin resources;
 - a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update;
-- the article title or release artifact contains only a month instead of an exact publication date.
+- the article masthead or release artifact contains only a month instead of an exact publication date;
+- the formal masthead compresses main title, subtitle, and date into one H1 or metadata title;
 - a visible title, cover date, or release index appends a timezone label such as `北京时间`, `UTC+8`, or `Asia/Shanghai`.
 - a high-risk sourced claim is unverified, stale, or lacks an exact source locator;
 - high-risk reasoning has no named claim dependencies, or a material `Unknown` still affects the central judgment;

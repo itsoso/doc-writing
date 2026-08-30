@@ -26,8 +26,8 @@ class OnePointBoundaryContractTests(unittest.TestCase):
             (PLUGIN_DIR / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
 
-    def test_plugin_version_is_0_4_0(self) -> None:
-        self.assertEqual("0.4.0", self.plugin["version"])
+    def test_plugin_version_is_0_4_1(self) -> None:
+        self.assertEqual("0.4.1", self.plugin["version"])
 
     def test_collaborative_evidence_contract_is_exposed(self) -> None:
         workflow = SKILL_DIR / "references" / "collaborative-evidence-workflow.md"
@@ -76,9 +76,15 @@ class OnePointBoundaryContractTests(unittest.TestCase):
         self.assertIn("Skill 的通用写作能力不依赖 OnePoint", self.readme_text)
 
     def test_publication_timezone_is_not_rendered_in_visible_date_text(self) -> None:
-        self.assertIn("must not appear in the visible title", self.skill_text)
+        self.assertIn("must not appear in the visible masthead", self.skill_text)
         self.assertIn("Render only the date", self.skill_text)
         self.assertIn("timezone suffix", self.skill_text)
+
+    def test_formal_masthead_separates_title_subtitle_and_date(self) -> None:
+        self.assertIn("# Main title", self.skill_text)
+        self.assertIn("> Subtitle", self.skill_text)
+        self.assertIn("The H1 must not contain the subtitle, date, or `｜`", self.skill_text)
+        self.assertIn("three separate visual lines", self.skill_text)
 
 
 if __name__ == "__main__":

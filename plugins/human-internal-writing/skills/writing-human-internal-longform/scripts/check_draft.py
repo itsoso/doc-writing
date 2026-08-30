@@ -164,6 +164,15 @@ def _has_valid_exact_publication_date(title: str) -> bool:
     return False
 
 
+def _masthead_date(lines: list[str]) -> tuple[int, str] | None:
+    for line_number, raw_line in enumerate(lines[:12], start=1):
+        value = raw_line.strip()
+        match = EXACT_PUBLICATION_DATE.fullmatch(value)
+        if match and _has_valid_exact_publication_date(value):
+            return line_number, value
+    return None
+
+
 def analyze(text: str) -> list[Finding]:
     findings: list[Finding] = []
     lines = text.splitlines()
@@ -173,25 +182,53 @@ def analyze(text: str) -> list[Finding]:
         ((index, line[2:].strip()) for index, line in enumerate(lines, start=1) if line.startswith("# ")),
         None,
     )
-    if title is None or not _has_valid_exact_publication_date(title[1]):
+    masthead_date = _masthead_date(lines)
+    if masthead_date is None:
+        partial_date = next(
+            (
+                (index, line.strip())
+                for index, line in enumerate(lines[:12], start=1)
+                if re.fullmatch(r"(?:19|20)\d{2}\s*年\s*(?:0?[1-9]|1[0-2])\s*月", line.strip())
+            ),
+            None,
+        )
         findings.append(
             Finding(
                 rule="missing-exact-publication-date",
                 severity="blocker",
-                line=title[0] if title else 1,
-                message="文章标题必须包含精确到日的发布日期（YYYY 年 M 月 D 日）。",
-                evidence=title[1] if title else "未发现 Markdown H1",
+                line=partial_date[0] if partial_date else (title[0] if title else 1),
+                message="正式题头必须包含独立且精确到日的发布日期（YYYY 年 M 月 D 日）。",
+                evidence=partial_date[1] if partial_date else "题头前 12 行未发现独立日期",
             )
         )
 
-    if title is not None and re.search(r"北京时间|UTC\s*\+?8|Asia/Shanghai", title[1], re.IGNORECASE):
+    if title is not None and (EXACT_PUBLICATION_DATE.search(title[1]) or "｜" in title[1]):
+        findings.append(
+            Finding(
+                rule="combined-formal-masthead",
+                severity="blocker",
+                line=title[0],
+                message="主标题、副标题和发布日期必须分成三行，不得合并进 H1。",
+                evidence=title[1],
+            )
+        )
+
+    timezone_line = next(
+        (
+            (index, line.strip())
+            for index, line in enumerate(lines[:12], start=1)
+            if re.search(r"北京时间|UTC\s*\+?8|Asia/Shanghai", line, re.IGNORECASE)
+        ),
+        None,
+    )
+    if timezone_line is not None:
         findings.append(
             Finding(
                 rule="visible-publication-timezone",
                 severity="blocker",
-                line=title[0],
-                message="发布时区只用于计算日期，不应显示在文章标题中。",
-                evidence=title[1],
+                line=timezone_line[0],
+                message="发布时区只用于计算日期，不应显示在正式题头中。",
+                evidence=timezone_line[1],
             )
         )
 
