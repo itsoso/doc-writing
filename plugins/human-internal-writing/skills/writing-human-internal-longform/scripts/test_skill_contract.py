@@ -26,8 +26,18 @@ class OnePointBoundaryContractTests(unittest.TestCase):
             (PLUGIN_DIR / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
 
-    def test_plugin_version_is_0_2_0(self) -> None:
-        self.assertEqual("0.2.0", self.plugin["version"])
+    def test_plugin_version_is_0_4_0(self) -> None:
+        self.assertEqual("0.4.0", self.plugin["version"])
+
+    def test_collaborative_evidence_contract_is_exposed(self) -> None:
+        workflow = SKILL_DIR / "references" / "collaborative-evidence-workflow.md"
+        checker = SKILL_DIR / "scripts" / "check_evidence.py"
+        self.assertTrue(workflow.is_file(), "missing collaboration workflow")
+        self.assertTrue(checker.is_file(), "missing evidence checker")
+        self.assertIn("`EDIT`", self.skill_text)
+        self.assertIn("`EXPAND`", self.skill_text)
+        self.assertIn("`AUDIT`", self.skill_text)
+        self.assertIn("references/collaborative-evidence-workflow.md", self.skill_text)
 
     def test_skill_loads_onepoint_reference_only_conditionally(self) -> None:
         self.assertTrue(ONEPOINT_REFERENCE.is_file(), "missing OnePoint reference")

@@ -104,11 +104,31 @@ Name the first practice, the people closest to it, the feedback source, and the 
 
 Read aloud. Cut throat-clearing and duplicated endings. Replace one abstract sentence per section with a concrete object or consequence. Keep asymmetry when it reflects the argument.
 
+## 6. Evidence readiness
+
+### Pass when
+
+- Consequential claims have stable IDs where review or reuse requires them.
+- Source-bound claims point to exact locators, and high-risk sources were opened and verified.
+- Mutable high-risk sources are current or explicitly versioned; reasoning names its supporting claims.
+- Material unknowns remain visible and do not masquerade as settled conclusions.
+
+### Failure symptoms
+
+- A search result, snippet, generated summary, or prior article is treated as controlling evidence.
+- A dashboard, organization snapshot, price, schedule, live configuration, or public page is assumed current without rechecking.
+- The ledger says `verified`, but no one checked that the source supports the exact proposition and certainty.
+- A difficult claim was deleted, downgraded, or relabeled only to make a checker pass.
+
+### Repair
+
+Open the controlling source, record its locator and version, and narrow the claim to what it actually supports. Resolve high-risk unknowns or keep the draft below editorial readiness. Treat the evidence checker as a structural gate only.
+
 ## Release decision
 
 Use three outcomes:
 
-- **Ready** — all five gates pass; remaining edits are cosmetic.
+- **Ready** — all six gates pass; remaining edits are cosmetic.
 - **Revise** — the argument is sound but one or more gates need a targeted repair.
 - **Return to source** — fidelity, central judgment, or reader change is unresolved; further polishing would hide the real problem.
 

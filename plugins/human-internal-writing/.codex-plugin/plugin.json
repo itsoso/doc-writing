@@ -1,6 +1,6 @@
 {
   "name": "human-internal-writing",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "Turn source-faithful viewpoints into restrained, credible, actionable internal long-form writing.",
   "author": {
     "name": "KStack Team"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Human Internal Writing",
     "shortDescription": "Write source-faithful internal long-form without generic AI phrasing.",
-    "longDescription": "Transform meeting notes, interviews, leadership viewpoints, and rough drafts into restrained internal articles with traceable claims, a distinctive human voice, and concrete action. Includes an explainable editorial checker. Kuaishou-internal users can optionally retrieve authorized meeting sources from OnePoint; the general writing method does not depend on it.",
+    "longDescription": "Transform meeting notes, interviews, leadership viewpoints, and rough drafts into restrained internal articles with traceable claims, a distinctive human voice, and concrete action. Supports explicit edit, expand, and audit modes, section-by-section collaboration, and a structural claim-to-evidence readiness gate. Kuaishou-internal users can optionally retrieve authorized meeting sources from OnePoint; the general writing method does not depend on it.",
     "developerName": "KStack Team",
     "category": "Productivity",
     "capabilities": [
@@ -18,7 +18,8 @@
     "defaultPrompt": [
       "Turn these meeting notes into a restrained internal article.",
       "Preserve my viewpoint while removing generic AI phrasing.",
-      "Cold-read this team letter and strengthen its action path."
+      "Cold-read this team letter and strengthen its action path.",
+      "Audit this draft's consequential claims without rewriting it."
     ]
   }
 }

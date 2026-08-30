@@ -7,7 +7,8 @@
 - `human-internal-writing` 插件；
 - `$writing-human-internal-longform` 核心 Skill；
 - 来源忠实度、个人声音、论证结构、行动承接和阅读节奏评审标准；
-- 可解释的草稿检查器与测试。
+- `EDIT`、`EXPAND`、`AUDIT` 三种明确操作模式与分章节协作协议；
+- 可解释的草稿检查器、Claim–Evidence 结构门禁与测试。
 
 “减少 AI 味”在这里指提高编辑质量，不是规避 AI 检测。插件不会虚构观点、数字、引语或个人经历，也不会把单一检查分数当成文章质量结论。
 
@@ -40,7 +41,9 @@ Skill 将写作分成七个阶段：
 4. 根据材料选择叙事骨架，而不是套用固定目录；
 5. 先完成结构和全文，再逐句润色；
 6. 删除空洞排比、机械标签、重复总结与抽象词堆叠；
-7. 通过来源、声音、论证、行动和阅读节奏五道发布门禁。
+7. 通过来源、声音、论证、行动、阅读节奏与证据就绪六道编辑门禁。
+
+对现有文字的小改使用 `EDIT`，新增内容使用 `EXPAND`，只评审不改写时使用 `AUDIT`。用户要求逐节协作时，Skill 会先反向梳理全文，再在每个检查点展示文本或 diff、相关 Claim ID、已打开的来源、新增推理和需要作者决定的事项；最后仍要做一次全文一致性复核。
 
 ## 交付物契约
 
@@ -78,6 +81,17 @@ python3 plugins/human-internal-writing/skills/writing-human-internal-longform/sc
 
 它会给出带规则名和行号的编辑提示，包括固定标签重复、机械顺序词、抽象词集中、相邻段落重复、标题过碎以及长文缺少行动或风险表达等。
 
+## Claim–Evidence 门禁
+
+重要事实、数字、因果、技术结论或承诺可以记录在 CSV 证据表中，并在声称 `Editorially ready` 前做结构校验：
+
+```bash
+python3 plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/check_evidence.py \
+  path/to/evidence.csv --require-ready --json
+```
+
+该检查只验证来源定位、版本/新鲜度、核验状态、Claim ID 和依赖关系。它不会打开来源、证明事实、评价文风，也不能替代人工回读。
+
 运行测试：
 
 ```bash
@@ -86,6 +100,9 @@ PYTHONDONTWRITEBYTECODE=1 python3 \
 
 PYTHONDONTWRITEBYTECODE=1 python3 \
   plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_skill_contract.py -v
+
+PYTHONDONTWRITEBYTECODE=1 python3 \
+  plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_check_evidence.py -v
 ```
 
 ## 数据边界

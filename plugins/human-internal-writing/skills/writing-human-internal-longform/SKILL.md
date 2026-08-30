@@ -19,6 +19,16 @@ Treat “less AI-like” as an editorial-quality request. Never claim to evade A
 - Ask only when a missing answer would materially change the article. Otherwise state the assumption and continue.
 - Keep confidential source material in the authorized workspace. Do not copy internal source content into reusable examples.
 
+## Select the operation mode
+
+Name the mode before substantive work:
+
+- `EDIT` — make the smallest sufficient change to existing prose and expose substantive diffs or certainty shifts.
+- `EXPAND` — add new prose only after bounding the claim, evidence, exclusions, and connection to the article.
+- `AUDIT` — report findings and readiness blockers without silently rewriting the draft.
+
+Grammar, punctuation, and other meaning-preserving corrections are low risk. Reordering, new causal bridges, examples, citations, terminology changes, and stronger or weaker claims are substantive. Do not turn `AUDIT` into `EDIT` unless the user also asked for revision.
+
 ## Collect the five inputs
 
 Identify these before drafting:
@@ -50,6 +60,10 @@ Extract before composing. Use a compact working table when the material is large
 | Helpful connective idea | Not present in source | Editorial | Include only if it improves comprehension without changing stance |
 
 Record concrete examples, repeated phrases, causal claims, decisions, doubts, objections, and proposed actions. Flag conflicts rather than silently choosing one version.
+
+For consequential factual, numeric, causal, technical, business-impact, or commitment claims, assign stable Claim IDs such as `C001` and record source locator, source version, verification status, freshness, and dependencies. Do not burden ordinary connective prose or low-risk wording edits with IDs unless they introduce a new proposition.
+
+Read [references/collaborative-evidence-workflow.md](references/collaborative-evidence-workflow.md) when the user requests section-by-section collaboration, when external research supports consequential claims, when source and new connective reasoning are mixed, or when audit must remain separate from revision.
 
 ### 2. Build a voice map
 
@@ -97,6 +111,8 @@ Draft the complete article before polishing individual sentences. Let evidence l
 
 Allow natural asymmetry: an important section may be long, a transition may be one sentence, and not every argument needs three parallel points.
 
+When the user explicitly asks to collaborate section by section, reverse-outline the whole article first, then use bounded checkpoints. At each checkpoint expose the proposed text or diff, changed Claim IDs, exact sources opened, new reasoning, certainty shifts, and decisions that materially affect stance or scope. An accepted section is provisional: reopen it only when a later source conflict or dependency changes it, and explain why. Finish with a whole-document coherence read.
+
 ### 6. Run the de-templating pass
 
 Edit for thought, not cosmetic irregularity:
@@ -119,6 +135,14 @@ python3 scripts/check_draft.py <draft.md> --max-findings 8
 ```
 
 Treat every result as a prompt for human review. The script is not a score, proof of quality, or AI-authorship detector. Fix the reasoning when a finding is valid; do not rewrite merely to silence a rule.
+
+For serious factual or causal work, validate the claim ledger before declaring the article editorially ready:
+
+```bash
+python3 scripts/check_evidence.py evidence.csv --require-ready --json
+```
+
+This is a structural gate, not a truth or prose-quality test. Search snippets, generated summaries, and another article's bibliography remain candidate evidence until the controlling source is opened and checked against the exact proposition, scope, and certainty.
 
 ### 7. Cold-read and release
 
@@ -187,3 +211,7 @@ Do not declare the article ready when any of these remain:
 - a publish step was requested but only the Markdown was produced, without the Word/WPS-compatible `.docx` and index update;
 - the article title or release artifact contains only a month instead of an exact publication date.
 - a visible title, cover date, or release index appends a timezone label such as `北京时间`, `UTC+8`, or `Asia/Shanghai`.
+- a high-risk sourced claim is unverified, stale, or lacks an exact source locator;
+- high-risk reasoning has no named claim dependencies, or a material `Unknown` still affects the central judgment;
+- `AUDIT` findings were silently rewritten without revision authorization;
+- section-level edits were accepted but the final whole-document coherence read was skipped.
