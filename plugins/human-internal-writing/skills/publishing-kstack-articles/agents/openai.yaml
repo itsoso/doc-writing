@@ -1,0 +1,6 @@
+interface:
+  display_name: "Publish KStack Articles"
+  short_description: "交付经验证的 Markdown 与公司 Docs，按需生成 DOCX/WPS"
+  default_prompt: "Use $publishing-kstack-articles to preserve canonical Markdown, validate the exact Docs source, publish only when the write is authorized, and return reproducible readback evidence; generate DOCX/WPS only when explicitly requested."
+policy:
+  allow_implicit_invocation: true

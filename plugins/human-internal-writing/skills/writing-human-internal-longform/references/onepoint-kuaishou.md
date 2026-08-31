@@ -1,6 +1,6 @@
-# OnePoint meeting sources for Kuaishou-internal writing
+# Onepoint meeting sources for Kuaishou-internal writing
 
-> 适用范围：OnePoint 是快手内部产品。以下内容仅适用于快手公司内部、具备相应网络与会议权限的用户。通用 Skill 的写作方法不依赖 OnePoint；外部用户或其他公司的会议材料直接使用通用流程即可。
+> 适用范围：Onepoint 是快手内部产品。以下内容仅适用于快手公司内部、具备相应网络与会议权限的用户。通用 Skill 的写作方法不依赖 Onepoint；外部用户或其他公司的会议材料直接使用通用流程即可。
 
 ## 目录
 
@@ -16,15 +16,15 @@
 
 仅在以下任一条件成立时使用：
 
-- 用户明确提供快手 OnePoint 会议链接；
-- 用户要求从 OnePoint 查找、查看或总结会议；
+- 用户明确提供快手 Onepoint 会议链接；
+- 用户要求从 Onepoint 查找、查看或总结会议；
 - 用户明确说明当前任务位于快手内部环境。
 
-不要因为材料里出现“会议”“纪要”或其他同名产品就调用 OnePoint。无法确认是否属于快手内部时，先把 OnePoint 视为不可用，使用用户提供的文本或询问来源。
+不要因为材料里出现“会议”“纪要”或其他同名产品就调用 Onepoint。无法确认是否属于快手内部时，先把 Onepoint 视为不可用，使用用户提供的文本或询问来源。
 
 ## 先遵循内部安装与授权规范
 
-OnePoint CLI 会持续更新。每次使用前，按照[公司内部 OnePoint CLI 授权文档](https://bs3-hb1.corp.kuaishou.com/kwaishop-langbridge-evaluation/onepointcli.md)校验本机版本与登录状态；不要把该内网文档的安装脚本复制进公共 Skill，以免发生版本漂移。
+Onepoint CLI 会持续更新。每次使用前，按照[公司内部 Onepoint CLI 授权文档](https://bs3-hb1.corp.kuaishou.com/kwaishop-langbridge-evaluation/onepointcli.md)校验本机版本与登录状态；不要把该内网文档的安装脚本复制进公共 Skill，以免发生版本漂移。
 
 验证命令是否存在：
 
@@ -48,7 +48,7 @@ onepoint whoami
 
 ## 定位会议
 
-如果用户给出 OnePoint 页面链接，从 URL 路径中提取 `<meetingId>`；不要把真实会议链接或 ID 写进插件、测试、README、提交信息或公共日志。
+如果用户给出 Onepoint 页面链接，从 URL 路径中提取 `<meetingId>`；不要把真实会议链接或 ID 写进插件、测试、README、提交信息或公共日志。
 
 如果用户只描述了会议，先列出小范围候选：
 
@@ -90,7 +90,7 @@ onepoint meeting view <meetingId> --include summary,actions,asrText,documents --
 5. `actions` 只证明会议记录中的行动项；若责任人或截止时间不明确，应保留不确定性。
 6. 多场会议合并时记录每个判断的来源会议，但在最终文章中只按用户需要展示来源细节。
 
-完成取材后，回到主 Skill 的证据账本、声音地图、叙事骨架和发布门禁，不要把 OnePoint 字段顺序直接变成文章目录。
+完成取材后，回到主 Skill 的证据账本、声音地图、叙事骨架和发布门禁，不要把 Onepoint 字段顺序直接变成文章目录。
 
 ## 内部数据边界
 

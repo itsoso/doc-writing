@@ -1,0 +1,88 @@
+{
+  "schema_version": "kstack.style.v1",
+  "palette": {
+    "ink": "#202124",
+    "navy": "#17344B",
+    "blue": "#2E74B5",
+    "dark_blue": "#1F4D78",
+    "muted": "#5F6368",
+    "line": "#DADCE0",
+    "callout": "#F4F6F9"
+  },
+  "docs": {
+    "view_model": "A3",
+    "font_family_policy": "native",
+    "roles": {
+      "kicker": {"size": 10, "color": "#2E74B5", "alignment": "left"},
+      "h1": {"size": 24, "color": "#17344B", "alignment": "center"},
+      "subtitle": {"size": 14, "color": "#5F6368", "alignment": "center"},
+      "date": {"size": 9, "color": "#5F6368", "alignment": "center"},
+      "lead": {"size": 11, "color": "#1F4D78", "alignment": "left"},
+      "h2": {"size": 16, "color": "#2E74B5", "alignment": "left"},
+      "h3": {"size": 13, "color": "#2E74B5", "alignment": "left"},
+      "body": {"size": 11, "color": "#202124", "alignment": "left"},
+      "list": {"size": 11, "color": "#202124", "alignment": "left"},
+      "caption": {"size": 9, "color": "#5F6368", "alignment": "left"},
+      "source": {"size": 9, "color": "#5F6368", "alignment": "left"}
+    },
+    "profiles": {
+      "index": {
+        "role_overrides": {
+          "h1": {"alignment": "center"},
+          "subtitle": {"alignment": "left"},
+          "date": {"alignment": "left"},
+          "lead": {"alignment": "left"},
+          "h2": {"alignment": "left"},
+          "h3": {"color": "#17344B", "alignment": "left"},
+          "body": {"alignment": "left"},
+          "list": {"alignment": "left"},
+          "caption": {"alignment": "left"},
+          "source": {"alignment": "left"}
+        },
+        "additional_roles": {
+          "entry-title": {"size": 13, "color": "#2E74B5", "alignment": "left"},
+          "note": {"size": 10, "color": "#5F6368", "alignment": "left"}
+        }
+      }
+    }
+  },
+  "docx": {
+    "page": {"width_mm": 210, "height_mm": 297, "margin_mm": 21},
+    "body_line_spacing": 1.5,
+    "body_after_pt": 6,
+    "font_profiles": {
+      "macos_wps": {"heading": "PingFang SC", "body": "Songti SC", "latin": "Arial"},
+      "windows_wps": {"heading": "微软雅黑", "body": "宋体", "latin": "Arial"}
+    },
+    "roles": {
+      "kicker": {"size_pt": 10, "color": "#2E74B5", "alignment": "left"},
+      "title": {"size_pt": 24, "color": "#17344B", "alignment": "center"},
+      "subtitle": {"size_pt": 14, "color": "#5F6368", "alignment": "center"},
+      "date": {"size_pt": 9, "color": "#5F6368", "alignment": "center"},
+      "h2": {"size_pt": 16, "color": "#2E74B5", "alignment": "left"},
+      "h3": {"size_pt": 13, "color": "#2E74B5", "alignment": "left"},
+      "body": {"size_pt": 11, "color": "#202124", "alignment": "left"},
+      "list": {"size_pt": 11, "color": "#202124", "alignment": "left"},
+      "lead": {"size_pt": 11, "color": "#1F4D78", "alignment": "left"},
+      "caption": {"size_pt": 9, "color": "#5F6368", "alignment": "left"},
+      "source": {"size_pt": 9, "color": "#5F6368", "alignment": "left"},
+      "header_footer": {"size_pt": 8.5, "color": "#5F6368", "alignment": "role-specific"}
+    },
+    "profiles": {
+      "index": {
+        "role_overrides": {
+          "title": {"alignment": "center"},
+          "subtitle": {"alignment": "left"},
+          "date": {"alignment": "left"},
+          "h2": {"alignment": "left"},
+          "h3": {"color": "#17344B", "alignment": "left"},
+          "body": {"alignment": "left"},
+          "list": {"alignment": "left"},
+          "lead": {"alignment": "left"},
+          "caption": {"alignment": "left"},
+          "source": {"alignment": "left"}
+        }
+      }
+    }
+  }
+}

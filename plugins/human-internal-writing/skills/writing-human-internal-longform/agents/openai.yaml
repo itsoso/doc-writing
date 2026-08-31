@@ -1,6 +1,6 @@
 interface:
   display_name: "Human Internal Longform"
-  short_description: "协作完成来源可追溯、保留个人判断且可行动的内部长文"
-  default_prompt: "Use $writing-human-internal-longform to choose an edit, expand, or audit mode and turn these sources into a restrained, traceable internal article."
+  short_description: "协作完成证据可追溯、作者声音清晰且技术可核验的内部长文"
+  default_prompt: "Use $writing-human-internal-longform to choose EDIT, EXPAND, or AUDIT; preserve authorial judgment; bind consequential claims to verified evidence; make an index or knowledge hub explain the system before its entry points; and stop at the requested draft, editorial, or release state."
 policy:
   allow_implicit_invocation: true

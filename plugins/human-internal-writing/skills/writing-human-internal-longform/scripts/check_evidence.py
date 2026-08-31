@@ -15,6 +15,7 @@ from pathlib import Path
 SOURCE_BOUND_STATES = {"sourced", "observed", "verified"}
 REASONED_STATES = {"inference", "scenario", "proposal", "editorial"}
 ALLOWED_STATES = SOURCE_BOUND_STATES | REASONED_STATES | {"unknown"}
+ALLOWED_RISKS = {"low", "medium", "high", "critical"}
 HIGH_RISK = {"high", "critical"}
 REQUIRED_COLUMNS = {
     "claim_id",
@@ -49,6 +50,7 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     for row_number, row in enumerate(rows, start=2):
         state = row.get("state", "").strip().lower()
         risk = row.get("risk", "").strip().lower()
+        effective_high_risk = risk in HIGH_RISK or risk not in ALLOWED_RISKS
         verification = row.get("verification_status", "").strip().lower()
         freshness = row.get("freshness_status", "").strip().lower()
         claim_id = row.get("claim_id", "").strip()
@@ -73,6 +75,18 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                     + ", ".join(sorted(ALLOWED_STATES)),
                 }
             )
+        if risk not in ALLOWED_RISKS:
+            findings.append(
+                {
+                    "rule": "invalid-risk",
+                    "severity": "blocker",
+                    "claim_id": claim_id,
+                    "row": str(row_number),
+                    "message": "Risk must be one of: "
+                    + ", ".join(sorted(ALLOWED_RISKS))
+                    + ". Missing or invalid risk is treated as high risk until corrected.",
+                }
+            )
         if state in SOURCE_BOUND_STATES and not row.get("source_locator", "").strip():
             findings.append(
                 {
@@ -83,7 +97,11 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                     "message": "Sourced, observed, or verified claims require an exact source locator.",
                 }
             )
-        if state in SOURCE_BOUND_STATES and risk in HIGH_RISK and freshness not in {"current", "immutable"}:
+        if (
+            state in SOURCE_BOUND_STATES
+            and effective_high_risk
+            and freshness not in {"current", "immutable"}
+        ):
             findings.append(
                 {
                     "rule": "stale-high-risk-source",
@@ -93,7 +111,11 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                     "message": "High-risk mutable sources must be current, or explicitly immutable, before editorial readiness.",
                 }
             )
-        if state in REASONED_STATES and risk in HIGH_RISK and not row.get("depends_on", "").strip():
+        if (
+            state in REASONED_STATES
+            and effective_high_risk
+            and not row.get("depends_on", "").strip()
+        ):
             findings.append(
                 {
                     "rule": "unbound-high-risk-reasoning",
@@ -103,7 +125,7 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                     "message": "High-risk inference, scenario, proposal, or editorial reasoning must name the claims it depends on.",
                 }
             )
-        if state == "unknown" and risk in HIGH_RISK:
+        if state == "unknown" and effective_high_risk:
             findings.append(
                 {
                     "rule": "material-unknown",
@@ -130,7 +152,11 @@ def analyze(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                     + ", ".join(unknown_dependencies),
                 }
             )
-        if state in SOURCE_BOUND_STATES and risk in HIGH_RISK and verification != "verified":
+        if (
+            state in SOURCE_BOUND_STATES
+            and effective_high_risk
+            and verification != "verified"
+        ):
             findings.append(
                 {
                     "rule": "unverified-high-risk-claim",
@@ -170,13 +196,16 @@ def main(argv: list[str] | None = None) -> int:
     if missing_columns:
         payload = {
             "error": "invalid-schema",
-            "path": str(args.path),
+            "path": args.path.name,
             "missing_columns": missing_columns,
         }
         if args.json:
             print(json.dumps(payload, ensure_ascii=False, indent=2))
         else:
-            print("error: missing required columns: " + ", ".join(missing_columns), file=sys.stderr)
+            print(
+                "error: missing required columns: " + ", ".join(missing_columns),
+                file=sys.stderr,
+            )
         return 2
 
     findings = analyze(rows)
@@ -184,7 +213,7 @@ def main(argv: list[str] | None = None) -> int:
     warning_count = sum(item["severity"] == "warning" for item in findings)
     ready = blocker_count == 0
     payload = {
-        "path": str(args.path),
+        "path": args.path.name,
         "ready": ready,
         "summary": {
             "claims": len(rows),

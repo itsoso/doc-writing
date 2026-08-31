@@ -1,14 +1,16 @@
 # Human Internal Writing for Codex
 
-把会议记录、访谈、管理者观点或已有草稿整理成克制、可信、可行动的内部长文，同时保留作者真实的判断、张力与语言习惯。
+把会议记录、访谈、管理者观点、技术证据或已有草稿整理成克制、可信、可行动的内部长文，同时把可编辑 Markdown 稳定交付到目标发布渠道。
 
 这个仓库提供一个可直接安装的 Codex Marketplace，其中包含：
 
 - `human-internal-writing` 插件；
-- `$writing-human-internal-longform` 核心 Skill；
+- `$writing-human-internal-longform` 写作与编辑 Skill；
+- `$publishing-kstack-articles` KStack 发布与验证 Skill；
 - 来源忠实度、个人声音、论证结构、行动承接和阅读节奏评审标准；
 - `EDIT`、`EXPAND`、`AUDIT` 三种明确操作模式与分章节协作协议；
-- 可解释的草稿检查器、Claim–Evidence 结构门禁与测试。
+- 面向文章索引、专栏主页和知识 Hub 的全局一致性检查；
+- 可解释的草稿检查器、Claim–Evidence 结构门禁、Docs 样式验证与可复现实证。
 
 “减少 AI 味”在这里指提高编辑质量，不是规避 AI 检测。插件不会虚构观点、数字、引语或个人经历，也不会把单一检查分数当成文章质量结论。
 
@@ -41,20 +43,23 @@ Skill 将写作分成七个阶段：
 4. 根据材料选择叙事骨架，而不是套用固定目录；
 5. 先完成结构和全文，再逐句润色；
 6. 删除空洞排比、机械标签、重复总结与抽象词堆叠；
-7. 通过来源、声音、论证、行动、阅读节奏与证据就绪六道编辑门禁。
+7. 按文档类型通过来源、声音、论证、行动、阅读节奏、技术完整性、证据就绪、读者后果和 Index/Hub 全局一致性等条件门禁。
 
 对现有文字的小改使用 `EDIT`，新增内容使用 `EXPAND`，只评审不改写时使用 `AUDIT`。用户要求逐节协作时，Skill 会先反向梳理全文，再在每个检查点展示文本或 diff、相关 Claim ID、已打开的来源、新增推理和需要作者决定的事项；最后仍要做一次全文一致性复核。
 
+文章索引、专栏主页或知识 Hub 不是栏目清单。它们需要先解释各主线共同回答什么问题、彼此如何形成系统，再提供按读者问题组织的入口；栏目增删、重命名或重排后，需要重新检查题头、全局介绍、导航和栏目边界。
+
 ## 交付物契约
 
-Skill 治理编辑质量，也治理发布时的交付物形态。任何使用该 Skill 的 agent（Codex、WorkBuddy、DSH 等）在执行发布或归档时，必须同时产出并保持对齐：
+写作 Skill 冻结内容与证据边界，发布 Skill 负责派生产物和发布证据。KStack 的默认链路是 `Markdown → 公司 Docs`：
 
-- **Markdown 源文件**：可编辑的事实源，存入目标仓库，所有后续修改只发生在这一份上；
-- **Word/WPS 兼容 doc（`.docx`）**：默认分享与评审格式，从 Markdown 用 pandoc 生成（`pandoc <article>.md -o <article>.docx --toc-depth=2 -M lang=zh-CN`），与源文件同目录，Word 和 WPS 均可正确打开，H1 为文档标题、正文从 `h2` 起；
-- **WordPress 兼容 HTML 片段**（可选，仅 web 发布时）：从 Markdown 生成，仅使用 WordPress 保留的块级标签（`h1–h4, p, strong, em, blockquote, ul/ol/li, a, img, hr, code, pre, table`），无 `style`/`script`/内联样式/类属性，无文档级包裹，标题 H1 作为文章题目不在正文重复，正文从 `h2` 起；
-- **索引更新**：目标仓库有 README 或索引时，在同一变更集内更新条目。
+- **Markdown 源文件**：唯一可编辑事实源；带图文章同时保留原图、顺序、题注和章节映射；
+- **Docs 发布源**：由同版本 Markdown 派生，通过样式验证后才可用于已授权的写入；
+- **远端回读证据**：写入后回读标题、正文、链接和图片，不能用“命令成功”代替发布完成；
+- **DOCX/WPS**：仅在用户明确要求时生成、渲染和维护，不属于默认链路；
+- **索引更新**：目标仓库有 README 或文章索引时，在同一变更集内更新。
 
-一致性规则：`.docx` 与 HTML 片段均为派生产物——Markdown 变更必须在同一提交内重新生成，不允许手改。仅请求对话内评审（无发布或归档）时，单独交付 Markdown 即可。
+Markdown 变化后，所有派生产物和验证证据都必须重新生成，禁止手改派生产物或沿用旧哈希。仅请求对话内评审或本地草稿时，停在用户要求的边界，不进行外部写入。
 
 正式文章默认使用三行题头，不再把日期塞进标题：
 
@@ -63,24 +68,24 @@ Skill 治理编辑质量，也治理发布时的交付物形态。任何使用�
 
 > 副标题
 
-2026 年 8 月 30 日
+2099 年 4 月 5 日
 ```
 
-H1、文档标题元数据和索引链接文字只使用主标题；副标题与日期分别保留独立层级。日期仍须精确到日，并在 Markdown、DOCX、HTML 与索引中保持一致。
+H1、文档标题元数据和索引链接文字只使用主标题；副标题与日期分别保留独立层级。日期仍须精确到日，并在 Markdown 与实际生成的发布渠道中保持一致。
 
-## OnePoint（仅限快手内部）
+## Onepoint（仅限快手内部）
 
-Skill 的通用写作能力不依赖 OnePoint。任何组织都可以直接使用会议文本、访谈、笔记或草稿完成长文写作。
+Skill 的通用写作能力不依赖 Onepoint。任何组织都可以直接使用会议文本、访谈、笔记或草稿完成长文写作。
 
-插件同时提供一份条件加载的 OnePoint 参考，仅适用于快手公司内部、具备相应网络和会议权限的用户。当任务明确包含快手 OnePoint 会议链接或要求从 OnePoint 读取会议时，Skill 会先按公司内部规范确认 CLI 与登录状态，再读取会议摘要、行动项、ASR 和关联文档，最后回到同一套通用写作流程。
+插件同时提供一份条件加载的 Onepoint 参考，仅适用于快手公司内部、具备相应网络和会议权限的用户。当任务明确包含快手 Onepoint 会议链接或要求从 Onepoint 读取会议时，Skill 会先按公司内部规范确认 CLI 与登录状态，再读取会议摘要、行动项、ASR 和关联文档，最后回到同一套通用写作流程。
 
-快手内部用户应以[OnePoint CLI 授权文档](https://bs3-hb1.corp.kuaishou.com/kwaishop-langbridge-evaluation/onepointcli.md)为准。最小会议读取方式为：
+快手内部用户应以[Onepoint CLI 授权文档](https://bs3-hb1.corp.kuaishou.com/kwaishop-langbridge-evaluation/onepointcli.md)为准。最小会议读取方式为：
 
 ```bash
 onepoint meeting view <meetingId> --full --output compact_json
 ```
 
-OnePoint 会议链接、真实 meetingId、完整 ASR、参会人信息和内部业务内容不得写入公共仓库。外部用户或无权访问 OnePoint 的用户，可以提供已授权的会议文本或导出材料；Skill 的其余能力不受影响。
+Onepoint 会议链接、真实 meetingId、完整 ASR、参会人信息和内部业务内容不得写入公共仓库。外部用户或无权访问 Onepoint 的用户，可以提供已授权的会议文本或导出材料；Skill 的其余能力不受影响。
 
 ## 草稿检查器
 
@@ -88,10 +93,10 @@ OnePoint 会议链接、真实 meetingId、完整 ASR、参会人信息和内部
 
 ```bash
 python3 plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/check_draft.py \
-  path/to/draft.md
+  path/to/draft.md --formal
 ```
 
-它会给出带规则名和行号的编辑提示，包括固定标签重复、机械顺序词、抽象词集中、相邻段落重复、标题过碎以及长文缺少行动或风险表达等。
+它会给出带规则名和行号的编辑提示，包括固定标签重复、机械顺序词、抽象词集中、相邻段落重复、标题过碎以及长文缺少行动或风险表达等。`--formal` 只用于正式文章或发布目标，会额外要求独立的 H1、副标题和精确发布日期；讨论记录等非正式草稿应省略该参数。
 
 ## Claim–Evidence 门禁
 
@@ -104,19 +109,18 @@ python3 plugins/human-internal-writing/skills/writing-human-internal-longform/sc
 
 该检查只验证来源定位、版本/新鲜度、核验状态、Claim ID 和依赖关系。它不会打开来源、证明事实、评价文风，也不能替代人工回读。
 
-运行测试：
+运行完整测试：
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python3 \
-  plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_check_draft.py -v
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v \
+  -s plugins/human-internal-writing/skills/writing-human-internal-longform/scripts \
+  -p 'test_*.py'
 
-PYTHONDONTWRITEBYTECODE=1 python3 \
-  plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_skill_contract.py -v
-
-PYTHONDONTWRITEBYTECODE=1 python3 \
-  plugins/human-internal-writing/skills/writing-human-internal-longform/scripts/test_check_evidence.py -v
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v \
+  -s plugins/human-internal-writing/skills/publishing-kstack-articles/scripts \
+  -p 'test_*.py'
 ```
 
 ## 数据边界
 
-除上面的 OnePoint 官方授权文档入口外，仓库不包含会议原文、具体会议链接、人员信息或真实发布文章。示例全部为合成内容。处理内部材料时，请在获得授权的工作区中操作，并遵守所在组织的数据与发布规范。
+除上面的 Onepoint 官方授权文档入口外，仓库不包含会议原文、具体会议链接、人员信息或真实发布文章。示例全部为合成内容。真实 JSONML、发布回执、内部文档 ID/URL 和未脱敏回读证据必须留在授权的非公开、非跟踪位置；公共投影只保留脱敏状态与哈希。处理内部材料时，请遵守所在组织的数据与发布规范。
