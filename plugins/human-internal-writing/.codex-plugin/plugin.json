@@ -1,14 +1,14 @@
 {
   "name": "human-internal-writing",
   "version": "0.6.0",
-  "description": "Write source-faithful internal long-form and coherent Index/Hub pages with collaborative revision, claim-to-evidence gates, and reproducible release evidence.",
+  "description": "Route evidence-led writing through reusable editorial, enterprise-source, image, and verified Docs workflows, with a fail-closed public GitHub boundary.",
   "author": {
     "name": "KStack Team"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Human Internal Writing",
-    "shortDescription": "Write source-faithful articles and coherent Index/Hub pages.",
+    "shortDescription": "Route evidence-led writing through safe editorial and enterprise connectors.",
     "longDescription": "Transform source material into restrained internal articles, technical long-form, and coherent Index/Hub pages with explicit edit, expansion, and audit modes; claim-to-evidence mapping; baseline-aware review; and reproducible technical evidence, then preserve hash-bound Markdown and publish an authorized A3 company Docs version with style, structure, and remote readback verification. DOCX/WPS remains opt-in.",
     "developerName": "KStack Team",
     "category": "Productivity",
@@ -25,7 +25,9 @@
       "Audit this article Index/Hub for global coherence and reader entry clarity before changing its visual style.",
       "Review this technical article for claim traceability and reproducibility before revising it.",
       "Package this article as Markdown and a company Docs release with reproducible style, structure, and remote readback evidence.",
-      "When explicitly requested, add a verified DOCX/WPS package without weakening the Markdown and Docs gates."
+      "When explicitly requested, add a verified DOCX/WPS package without weakening the Markdown and Docs gates.",
+      "Classify this writing task and route it through the correct Kim, Docs, editorial, and publication Skills.",
+      "Prepare a clean public GitHub export without carrying enterprise data, credentials, or internal links."
     ]
   }
 }

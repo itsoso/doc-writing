@@ -11,6 +11,8 @@
 - `EDIT`、`EXPAND`、`AUDIT` 三种明确操作模式与分章节协作协议；
 - 面向文章索引、专栏主页和知识 Hub 的全局一致性检查；
 - 可解释的草稿检查器、Claim–Evidence 结构门禁、Docs 样式验证与可复现实证。
+- 顶层 `doc-writing-router`，统一编排写作、Kim、Docs、图片和发布能力。
+- 面向 GitHub 的公开导出边界、文章简报/证据/审批 Schema 与敏感信息扫描器。
 
 “减少 AI 味”在这里指提高编辑质量，不是规避 AI 检测。插件不会虚构观点、数字、引语或个人经历，也不会把单一检查分数当成文章质量结论。
 
@@ -124,3 +126,15 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v \
 ## 数据边界
 
 除上面的 Onepoint 官方授权文档入口外，仓库不包含会议原文、具体会议链接、人员信息或真实发布文章。示例全部为合成内容。真实 JSONML、发布回执、内部文档 ID/URL 和未脱敏回读证据必须留在授权的非公开、非跟踪位置；公共投影只保留脱敏状态与哈希。处理内部材料时，请遵守所在组织的数据与发布规范。
+
+## 企业路由与 GitHub 边界
+
+企业内网任务按来源路由到 `kim-sender-context`、`kim-cli`、`docs-cli` 及其声明的子 Skill；文章质量和公司 Docs 发布仍分别由写作与发布 Skill 负责。Kim、Docs、Onepoint 的真实数据和凭证不进入可复用示例或公开仓库。
+
+如果要生成 GitHub 公开版，请先按 [doc-writing GitHub 架构](docs/guides/doc-writing-github-architecture.md) 建立 allowlist 导出，再运行：
+
+```bash
+python3 scripts/check_public_repo.py --path <public-export> --json
+```
+
+扫描器命中内网 URL、文档 ID、凭证、邮箱或手机号时会失败闭环。`public_candidate` 不是外发授权；公开发布还需要法务、信息安全和业务 Owner 的审批记录。

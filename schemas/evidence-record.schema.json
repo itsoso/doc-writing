@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/doc-writing/evidence-record.schema.json",
+  "type": "object",
+  "required": ["claim_id", "claim", "source_kind", "status", "sensitivity"],
+  "properties": {
+    "claim_id": {"type": "string", "pattern": "^C[0-9]{3,}$"},
+    "claim": {"type": "string", "minLength": 1},
+    "source_kind": {"enum": ["kim", "docs", "code", "public", "author", "observation"]},
+    "locator": {"type": "string"},
+    "status": {"enum": ["verified", "observed", "inference", "scenario", "proposal", "unknown"]},
+    "freshness": {"enum": ["current", "point_in_time", "stale", "unknown"]},
+    "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

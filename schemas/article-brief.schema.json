@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/doc-writing/article-brief.schema.json",
+  "type": "object",
+  "required": ["audience", "reader", "change", "central_judgment", "mainline"],
+  "properties": {
+    "audience": {"enum": ["internal", "public_candidate", "public"]},
+    "reader": {"type": "string", "minLength": 1},
+    "change": {"type": "string", "minLength": 1},
+    "central_judgment": {"type": "string", "minLength": 1},
+    "mainline": {"type": "string", "minLength": 1},
+    "owner": {"type": "string"},
+    "baseline": {"type": "string"},
+    "deadline": {"type": "string"},
+    "acceptance_evidence": {"type": "string"},
+    "stop_or_rollback": {"type": "string"}
+  },
+  "additionalProperties": false
+}

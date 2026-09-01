@@ -1,3 +1,27 @@
 __pycache__/
 *.py[cod]
 .DS_Store
+
+# Enterprise and generated material: public exports must be assembled by allowlist.
+deliverables/**
+drafts/**
+tmp/**
+.codex_tmp/**
+**/docs-source/**
+**/docs-readback*/**
+**/rendered-pages/**
+**/rendered/**
+*.docx
+*.pdf
+*.zip
+*.raw
+*.har
+*.log
+
+# Local/runtime secrets and metadata.
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.mobileprovision

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/doc-writing/clearance.schema.json",
+  "type": "object",
+  "required": ["audience", "scope", "legal", "security", "business_owner"],
+  "properties": {
+    "audience": {"const": "public"},
+    "scope": {"type": "string", "minLength": 1},
+    "legal": {"type": "object", "required": ["approved", "approver", "date"], "properties": {"approved": {"const": true}, "approver": {"type": "string"}, "date": {"type": "string"}}},
+    "security": {"type": "object", "required": ["approved", "approver", "date"], "properties": {"approved": {"const": true}, "approver": {"type": "string"}, "date": {"type": "string"}}},
+    "business_owner": {"type": "object", "required": ["approved", "approver", "date"], "properties": {"approved": {"const": true}, "approver": {"type": "string"}, "date": {"type": "string"}}, "additionalProperties": false},
+    "expires_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}
