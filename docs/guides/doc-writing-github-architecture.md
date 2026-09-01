@@ -22,7 +22,7 @@
 
 ### 企业内网运行面
 
-`doc-writing-router` 根据来源路由到 `kim-sender-context`、`kim-cli`、`docs-cli`、`docs-word`、`docs-meeting-record` 等已安装 Skill。所有读取遵守本地/只读、OBO、权限、目标解析和回读规则；文章 Docs 与维护索引都通过 `publishing-kstack-articles` 完成。
+`doc-writing` 根据来源路由到 `kim-sender-context`、`kim-cli`、`docs-cli`、`docs-word`、`docs-meeting-record` 等已安装 Skill。所有读取遵守本地/只读、OBO、权限、目标解析和回读规则；文章 Docs 与维护索引都通过 `publishing-kstack-articles` 完成。
 
 ### GitHub 公开运行面
 
@@ -34,7 +34,7 @@
 doc-writing/
 ├── plugins/human-internal-writing/
 │   └── skills/
-│       ├── doc-writing-router/
+│       ├── doc-writing/
 │       ├── writing-human-internal-longform/
 │       └── publishing-kstack-articles/
 ├── schemas/                    # brief、evidence、image、clearance、receipt

@@ -1,15 +1,15 @@
 ---
-name: doc-writing-router
+name: doc-writing
 description: Route a writing task through the smallest safe combination of evidence, editorial, Kim, Docs, image, and publication capabilities. Use when a task may involve enterprise sources or when doc-writing is being packaged for GitHub.
 ---
 
-# Doc-writing Router
+# Doc-writing
 
 ## Purpose
 
-This is the top-level entry point for `doc-writing`. It turns the author's writing method into a repeatable, evidence-led workflow while keeping enterprise data connectors outside the public repository.
+This is the primary entry point for `doc-writing`. It turns the author's writing method into a repeatable, evidence-led workflow while keeping enterprise data connectors outside the public repository.
 
-The router owns classification and hand-off. It does not replace the editorial or connector Skills, and it must not copy Kim/Docs source content into reusable examples.
+This entry point owns classification and hand-off. It does not replace the editorial or connector Skills, and it must not copy Kim/Docs source content into reusable examples. For direct editorial work, it delegates to `writing-human-internal-longform`; that lower-level Skill remains available for advanced users who need to select `EDIT`, `EXPAND`, or `AUDIT` explicitly.
 
 ## Classify before reading sources
 

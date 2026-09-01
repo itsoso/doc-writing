@@ -1,0 +1,4 @@
+interface:
+  display_name: "Doc-writing"
+  short_description: "Route evidence-led writing through safe editorial and enterprise connectors."
+  default_prompt: "Use $doc-writing as the primary entry point: classify the source, author, reader, change, and audience; route through the smallest safe Skills; preserve evidence boundaries; and stop closed on ambiguity or missing readback."

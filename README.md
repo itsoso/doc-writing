@@ -7,13 +7,13 @@
 这个仓库提供一个可直接安装的 Codex Marketplace，其中包含：
 
 - `human-internal-writing` 插件；
-- `$writing-human-internal-longform` 写作与编辑 Skill；
+- `$doc-writing` 统一写作入口（内部调用编辑、Kim、Docs、图片和发布能力）；
 - `$publishing-kstack-articles` KStack 发布与验证 Skill；
 - 来源忠实度、个人声音、论证结构、行动承接和阅读节奏评审标准；
 - `EDIT`、`EXPAND`、`AUDIT` 三种明确操作模式与分章节协作协议；
 - 面向文章索引、专栏主页和知识 Hub 的全局一致性检查；
 - 可解释的草稿检查器、Claim–Evidence 结构门禁、Docs 样式验证与可复现实证；
-- 顶层 `doc-writing-router`，统一编排写作、Kim、Docs、图片和发布能力。
+- 底层 `$writing-human-internal-longform` 编辑 Skill，供需要直接控制编辑模式的高级场景使用。
 - 面向 GitHub 的公开导出边界、文章简报/证据/审批 Schema 与敏感信息扫描器。
 
 “减少 AI 味”在这里指提高编辑质量，不是规避 AI 检测。插件不会虚构观点、数字、引语或个人经历，也不会把单一检查分数当成文章质量结论。
@@ -22,8 +22,8 @@
 
 | 你要做什么 | 入口 | 结果 |
 |---|---|---|
-| 从会议、访谈或草稿写文章 | `$writing-human-internal-longform` | 保留观点、证据边界和行动路径的 Markdown |
-| 处理 Kim / Docs 内网材料 | `$doc-writing-router` | 按来源路由到授权的 Kim、Docs 和会议记录 Skill |
+| 从会议、访谈或草稿写文章 | `$doc-writing` | 保留观点、证据边界和行动路径的 Markdown |
+| 处理 Kim / Docs 内网材料 | `$doc-writing` | 按来源路由到授权的 Kim、Docs 和会议记录 Skill |
 | 发布或更新公司 Docs | `$publishing-kstack-articles` | Markdown → Docs → 文章回读 → 索引回读 |
 | 做 GitHub 公开导出 | `scripts/check_public_repo.py` | 只允许通过扫描和审批的干净导出 |
 
@@ -39,7 +39,7 @@ codex plugin add human-internal-writing@doc-writing
 安装后新建一个 Codex 任务，让新任务加载插件。例如：
 
 ```text
-使用 $writing-human-internal-longform，把这些会议材料整理成一篇克制、可信、保留我个人判断的内部长文。
+使用 $doc-writing，把这些会议材料整理成一篇克制、可信、保留我个人判断的内部长文。
 ```
 
 也可以自然地描述任务，例如：
@@ -78,11 +78,11 @@ Skill 将写作分成七个阶段：
 
 ## Skill 地图
 
-- [doc-writing-router](plugins/human-internal-writing/skills/doc-writing-router/SKILL.md)：统一入口、来源分类、企业路由、状态机和失败闭环；
+- [doc-writing](plugins/human-internal-writing/skills/doc-writing/SKILL.md)：推荐入口，负责来源分类、企业路由、状态机和失败闭环；
 - [writing-human-internal-longform](plugins/human-internal-writing/skills/writing-human-internal-longform/SKILL.md)：证据账本、声音地图、叙事结构、技术复核和去模板化编辑；
 - [publishing-kstack-articles](plugins/human-internal-writing/skills/publishing-kstack-articles/SKILL.md)：图片、Markdown、Docs 样式、文章回读和索引同步；
-- [企业路由矩阵](plugins/human-internal-writing/skills/doc-writing-router/references/enterprise-route-matrix.md)：Kim、Docs、会议记录和发布能力的最小路由；
-- [公开仓库边界](plugins/human-internal-writing/skills/doc-writing-router/references/public-repo-boundary.md)：公共 GitHub 与企业运行时的隔离规则；
+- [企业路由矩阵](plugins/human-internal-writing/skills/doc-writing/references/enterprise-route-matrix.md)：Kim、Docs、会议记录和发布能力的最小路由；
+- [公开仓库边界](plugins/human-internal-writing/skills/doc-writing/references/public-repo-boundary.md)：公共 GitHub 与企业运行时的隔离规则；
 - [文章与证据 Schema](schemas/)：让简报、Claim、审批和发布回执可被程序检查。
 
 ## 交付物契约
@@ -96,6 +96,8 @@ Skill 将写作分成七个阶段：
 - **索引更新**：目标仓库有 README 或文章索引时，在同一变更集内更新。
 
 Markdown 变化后，所有派生产物和验证证据都必须重新生成，禁止手改派生产物或沿用旧哈希。仅请求对话内评审或本地草稿时，停在用户要求的边界，不进行外部写入。
+
+`$doc-writing` 是推荐入口；`$writing-human-internal-longform` 保留为底层编辑 Skill，适合需要直接指定编辑/证据能力时使用。
 
 正式文章默认使用三行题头，不再把日期塞进标题：
 

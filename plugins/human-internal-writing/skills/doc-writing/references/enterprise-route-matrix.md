@@ -13,7 +13,7 @@ This matrix names runtime dependencies without embedding their implementation or
 | Meeting record analysis | `docs-cli` | `docs-meeting-record` | Preserve speaker and transcript uncertainty |
 | Article prose, voice, claims, evidence | `writing-human-internal-longform` | evidence, technical, collaborative references as needed | No invented facts or hidden certainty shifts |
 | Article package and company Docs release | `publishing-kstack-articles` | visual style, release contract, Docs publication | Markdown first; image and article/index readback required |
-| Public GitHub export | `doc-writing-router` | `scripts/check_public_repo.py` and clearance record | Allowlist export only; fail on enterprise data or credentials |
+| Public GitHub export | `doc-writing` | `scripts/check_public_repo.py` and clearance record | Allowlist export only; fail on enterprise data or credentials |
 
 ## Routing sequence
 

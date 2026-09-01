@@ -26,6 +26,7 @@
       "Review this technical article for claim traceability and reproducibility before revising it.",
       "Package this article as Markdown and a company Docs release with reproducible style, structure, and remote readback evidence.",
       "When explicitly requested, add a verified DOCX/WPS package without weakening the Markdown and Docs gates.",
+      "Use $doc-writing as the primary entry point and route this task through the correct Kim, Docs, editorial, image, and publication Skills.",
       "Classify this writing task and route it through the correct Kim, Docs, editorial, and publication Skills.",
       "Prepare a clean public GitHub export without carrying enterprise data, credentials, or internal links."
     ]
