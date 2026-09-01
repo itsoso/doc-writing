@@ -27,7 +27,7 @@
 | 发布或更新公司 Docs | `$publishing-kstack-articles` | Markdown → Docs → 文章回读 → 索引回读 |
 | 做 GitHub 公开导出 | `scripts/check_public_repo.py` | 只允许通过扫描和审批的干净导出 |
 
-完整的路由、状态机和目录约定见[架构指南](docs/guides/doc-writing-github-architecture.md)。
+完整的路由、状态机和目录约定见[架构指南](docs/guides/doc-writing-github-architecture.md)；企业能力的安装与级联见[企业运行时安装指南](docs/guides/enterprise-skill-installation.md)。
 
 ## 安装
 
@@ -36,11 +36,36 @@ codex plugin marketplace add itsoso/doc-writing
 codex plugin add human-internal-writing@doc-writing
 ```
 
-安装后新建一个 Codex 任务，让新任务加载插件。例如：
+安装后新建一个 Codex 任务，让新任务加载插件。默认使用通用能力，不会自动访问企业系统：
 
 ```text
 使用 $doc-writing，把这些会议材料整理成一篇克制、可信、保留我个人判断的内部长文。
 ```
+
+### 快手内网能力包（可选）
+
+如果任务要读取快手 Docs、Kim 或 Onepoint，在已授权的公司运行时选择 `kuaishou-internal` 配置：
+
+```bash
+python3 scripts/check_dependencies.py --profile kuaishou-internal --json
+```
+
+这个检查会确认以下能力是否已由受控运行时提供：
+
+- 内网 Docs 阅读与写作：`docs-cli`、`docs-word` 及其声明的 `docs-*` 子 Skill；
+- Kim 内容读取：`kim-sender-context`、`kim-cli` 及 `kim-im`；
+- Onepoint 会议读取：受控运行时注册的 `onepoint-meeting-read`、`onepoint` 或 `onepoint.calendar-read/v1` 能力。
+
+缺少必需能力时，结果为 `blocked`，不会把请求降级成猜测，也不会静默安装或索取凭证。安装计划可先人工审阅：
+
+```bash
+python3 scripts/check_dependencies.py \
+  --profile kuaishou-internal \
+  --print-install-plan \
+  --enterprise-marketplace <approved-enterprise-marketplace>
+```
+
+企业管理员应在受控 Marketplace/运行时中按计划安装这些内部 Skill；公共 GitHub 仓库只保留名称、能力和路由契约，不包含内网实现、会议内容、文档 ID 或凭证。安装完成后重新运行上面的 `--json` 检查，直到所有 required 能力为 `ready`。
 
 也可以自然地描述任务，例如：
 
@@ -84,6 +109,8 @@ Skill 将写作分成七个阶段：
 - [企业路由矩阵](plugins/human-internal-writing/skills/doc-writing/references/enterprise-route-matrix.md)：Kim、Docs、会议记录和发布能力的最小路由；
 - [公开仓库边界](plugins/human-internal-writing/skills/doc-writing/references/public-repo-boundary.md)：公共 GitHub 与企业运行时的隔离规则；
 - [文章与证据 Schema](schemas/)：让简报、Claim、审批和发布回执可被程序检查。
+- [Skill 依赖清单](config/skill-dependencies.json)：通用配置与快手内网能力包的声明式依赖；
+- [依赖检查器](scripts/check_dependencies.py)：扫描已安装 Skill，输出 `ready`/`blocked` 状态和可审阅安装计划。
 
 ## 交付物契约
 

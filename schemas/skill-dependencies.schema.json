@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/doc-writing/skill-dependencies.schema.json",
+  "type": "object",
+  "required": ["schema_version", "primary_skill", "profiles"],
+  "properties": {
+    "schema_version": {"const": "doc-writing.dependencies.v1"},
+    "primary_skill": {"const": "doc-writing"},
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description"],
+        "properties": {
+          "description": {"type": "string", "minLength": 1},
+          "extends": {"type": "string"},
+          "required": {"$ref": "#/$defs/dependencies"},
+          "optional": {"$ref": "#/$defs/dependencies"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["capability", "skill_names", "source"],
+        "properties": {
+          "capability": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+          "skill_names": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "source": {"enum": ["bundled", "enterprise-runtime"]},
+          "match": {"enum": ["all", "any"]},
+          "subskills": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "resolution": {"type": "string"},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

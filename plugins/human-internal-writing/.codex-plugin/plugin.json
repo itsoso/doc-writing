@@ -27,6 +27,7 @@
       "Package this article as Markdown and a company Docs release with reproducible style, structure, and remote readback evidence.",
       "When explicitly requested, add a verified DOCX/WPS package without weakening the Markdown and Docs gates.",
       "Use $doc-writing as the primary entry point and route this task through the correct Kim, Docs, editorial, image, and publication Skills.",
+      "For a company-internal task, check config/skill-dependencies.json with the kuaishou-internal profile before reading Kim, Docs, or Onepoint; stop closed if a required runtime capability is missing.",
       "Classify this writing task and route it through the correct Kim, Docs, editorial, and publication Skills.",
       "Prepare a clean public GitHub export without carrying enterprise data, credentials, or internal links."
     ]

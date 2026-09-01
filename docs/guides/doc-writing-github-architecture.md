@@ -24,6 +24,8 @@
 
 `doc-writing` 根据来源路由到 `kim-sender-context`、`kim-cli`、`docs-cli`、`docs-word`、`docs-meeting-record` 等已安装 Skill。所有读取遵守本地/只读、OBO、权限、目标解析和回读规则；文章 Docs 与维护索引都通过 `publishing-kstack-articles` 完成。
 
+依赖不是隐式假设，而是由 `config/skill-dependencies.json` 声明、由 `scripts/check_dependencies.py` 在当前运行时解析。通用 profile 不需要企业连接器；`kuaishou-internal` profile 在确认 Docs、Kim 和 Onepoint 能力就绪前保持 `blocked`。公共包只负责路由和检查，不静默安装内部 Skill。
+
 ### GitHub 公开运行面
 
 公开运行面不读取 Kim/Docs，也不携带内部数据。它只使用公开资料或脱敏 fixture，运行 `scripts/check_public_repo.py`、文章质量校验和 Skill 测试。只有 `clearance.schema.json` 所描述的三方审批记录存在时，才允许把 `public_candidate` 提升为 `public`。
@@ -38,13 +40,14 @@ doc-writing/
 │       ├── writing-human-internal-longform/
 │       └── publishing-kstack-articles/
 ├── schemas/                    # brief、evidence、image、clearance、receipt
+├── config/                     # 可选能力包与运行时依赖清单
 ├── scripts/                    # 本地和 CI 可重复校验
-├── docs/guides/                # 架构、路由、发布闸门
+├── docs/guides/                # 架构、路由、安装、发布闸门
 ├── tests/                      # 脱敏 fixture，不放内网原文
 └── public/                     # 仅允许经过 allowlist 的公开文章
 ```
 
-当前企业工作树应作为私有源；公开仓库从 allowlist 重新导出，而不是从当前工作树直接镜像。
+当前企业工作树应作为私有源；公开仓库从 allowlist 重新导出，而不是从当前工作树直接镜像。企业依赖的安装和级联规则见[企业运行时安装指南](enterprise-skill-installation.md)。
 
 ## 一篇文章的状态机
 

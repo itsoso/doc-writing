@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/skill-dependencies.schema.json",
+  "schema_version": "doc-writing.dependencies.v1",
+  "primary_skill": "doc-writing",
+  "profiles": {
+    "generic": {
+      "description": "Public writing workflow; no enterprise connector is required.",
+      "required": [
+        {
+          "capability": "editorial-longform",
+          "skill_names": ["writing-human-internal-longform"],
+          "source": "bundled"
+        }
+      ],
+      "optional": [
+        {
+          "capability": "kstack-docs-publication",
+          "skill_names": ["publishing-kstack-articles"],
+          "source": "bundled"
+        }
+      ]
+    },
+    "kuaishou-internal": {
+      "description": "Fast path for authorized快手内网 writing tasks.",
+      "extends": "generic",
+      "required": [
+        {
+          "capability": "internal-docs-read-write",
+          "skill_names": ["docs-cli", "docs-word"],
+          "source": "enterprise-runtime",
+          "match": "all",
+          "subskills": [
+            "docs-search",
+            "docs-view",
+            "docs-docs",
+            "docs-meeting-record"
+          ]
+        },
+        {
+          "capability": "kim-message-read",
+          "skill_names": ["kim-sender-context", "kim-cli"],
+          "source": "enterprise-runtime",
+          "match": "all",
+          "subskills": ["kim-im"]
+        },
+        {
+          "capability": "onepoint-meeting-read",
+          "skill_names": [
+            "onepoint-meeting-read",
+            "onepoint",
+            "onepoint.calendar-read/v1"
+          ],
+          "source": "enterprise-runtime",
+          "match": "any",
+          "resolution": "controlled-runtime-capability",
+          "note": "The runtime must expose an authorized, read-only Onepoint meeting adapter; do not vendor its data or credentials."
+        }
+      ],
+      "optional": [
+        {
+          "capability": "kim-meeting-records",
+          "skill_names": ["kim-vc", "docs-meeting-record"],
+          "source": "enterprise-runtime",
+          "match": "any",
+          "note": "Use the provider that controls the requested meeting-record source."
+        }
+      ]
+    }
+  }
+}

@@ -11,6 +11,16 @@ This is the primary entry point for `doc-writing`. It turns the author's writing
 
 This entry point owns classification and hand-off. It does not replace the editorial or connector Skills, and it must not copy Kim/Docs source content into reusable examples. For direct editorial work, it delegates to `writing-human-internal-longform`; that lower-level Skill remains available for advanced users who need to select `EDIT`, `EXPAND`, or `AUDIT` explicitly.
 
+## Dependency profiles
+
+Use [`config/skill-dependencies.json`](../../../config/skill-dependencies.json) and `scripts/check_dependencies.py` to resolve capabilities before reading enterprise sources:
+
+- `generic` is self-contained and uses only the bundled editorial and optional publishing Skills;
+- `kuaishou-internal` adds controlled-runtime capabilities for Docs read/write, Kim message retrieval, and read-only Onepoint meeting retrieval;
+- enterprise dependencies are resolved by Skill name/capability, never by copying their implementation, data, URLs, tokens, cookies, or local paths into this repository.
+
+When an internal capability is missing, stop with `blocked` and show the missing names. Do not silently install, substitute a browser scrape, or weaken a read-only boundary. An administrator may review the generated install plan and provision the approved internal Marketplace/runtime before retrying.
+
 ## Classify before reading sources
 
 Capture five fields before drafting:
