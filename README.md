@@ -1,6 +1,8 @@
 # Human Internal Writing for Codex
 
-把会议记录、访谈、管理者观点、技术证据或已有草稿整理成克制、可信、可行动的内部长文，同时把可编辑 Markdown 稳定交付到目标发布渠道。
+把会议记录、访谈、管理者观点、技术证据或已有草稿，整理成克制、可信、可行动的长文，并把 Markdown 稳定交付到正确的目标渠道。
+
+`doc-writing` 的核心不是“代写一篇文章”，而是把个人判断变成一条可复盘的生产链：从真实问题和 OKR 主线出发，建立证据账本，保留作者声音，形成单一叙事主线，经过质量与技术复核，再进入 Markdown、内网 Docs 或经过审批的公开导出。
 
 这个仓库提供一个可直接安装的 Codex Marketplace，其中包含：
 
@@ -10,11 +12,22 @@
 - 来源忠实度、个人声音、论证结构、行动承接和阅读节奏评审标准；
 - `EDIT`、`EXPAND`、`AUDIT` 三种明确操作模式与分章节协作协议；
 - 面向文章索引、专栏主页和知识 Hub 的全局一致性检查；
-- 可解释的草稿检查器、Claim–Evidence 结构门禁、Docs 样式验证与可复现实证。
+- 可解释的草稿检查器、Claim–Evidence 结构门禁、Docs 样式验证与可复现实证；
 - 顶层 `doc-writing-router`，统一编排写作、Kim、Docs、图片和发布能力。
 - 面向 GitHub 的公开导出边界、文章简报/证据/审批 Schema 与敏感信息扫描器。
 
 “减少 AI 味”在这里指提高编辑质量，不是规避 AI 检测。插件不会虚构观点、数字、引语或个人经历，也不会把单一检查分数当成文章质量结论。
+
+## 三分钟了解
+
+| 你要做什么 | 入口 | 结果 |
+|---|---|---|
+| 从会议、访谈或草稿写文章 | `$writing-human-internal-longform` | 保留观点、证据边界和行动路径的 Markdown |
+| 处理 Kim / Docs 内网材料 | `$doc-writing-router` | 按来源路由到授权的 Kim、Docs 和会议记录 Skill |
+| 发布或更新公司 Docs | `$publishing-kstack-articles` | Markdown → Docs → 文章回读 → 索引回读 |
+| 做 GitHub 公开导出 | `scripts/check_public_repo.py` | 只允许通过扫描和审批的干净导出 |
+
+完整的路由、状态机和目录约定见[架构指南](docs/guides/doc-writing-github-architecture.md)。
 
 ## 安装
 
@@ -35,6 +48,18 @@ codex plugin add human-internal-writing@doc-writing
 总结我的全部发言，写成给团队全员阅读的内部长文。保留我的观点和语气，减少模板化表达，并给出明确行动路径。
 ```
 
+如果任务涉及企业来源，直接说明来源和受众即可：
+
+```text
+使用授权的 Kim 消息和 Docs 材料，按我的 OKR 主线写一篇内部文章；保留 Claim ID、Unknown、配图计划和可验收行动。
+```
+
+如果任务是公开仓库工程，而不是文章外发：
+
+```text
+把这套写作流程整理成可安装的 doc-writing Skill，保留 Kim/Docs 作为企业运行时依赖，不把内网数据带进仓库。
+```
+
 ## 工作方法
 
 Skill 将写作分成七个阶段：
@@ -50,6 +75,15 @@ Skill 将写作分成七个阶段：
 对现有文字的小改使用 `EDIT`，新增内容使用 `EXPAND`，只评审不改写时使用 `AUDIT`。用户要求逐节协作时，Skill 会先反向梳理全文，再在每个检查点展示文本或 diff、相关 Claim ID、已打开的来源、新增推理和需要作者决定的事项；最后仍要做一次全文一致性复核。
 
 文章索引、专栏主页或知识 Hub 不是栏目清单。它们需要先解释各主线共同回答什么问题、彼此如何形成系统，再提供按读者问题组织的入口；栏目增删、重命名或重排后，需要重新检查题头、全局介绍、导航和栏目边界。
+
+## Skill 地图
+
+- [doc-writing-router](plugins/human-internal-writing/skills/doc-writing-router/SKILL.md)：统一入口、来源分类、企业路由、状态机和失败闭环；
+- [writing-human-internal-longform](plugins/human-internal-writing/skills/writing-human-internal-longform/SKILL.md)：证据账本、声音地图、叙事结构、技术复核和去模板化编辑；
+- [publishing-kstack-articles](plugins/human-internal-writing/skills/publishing-kstack-articles/SKILL.md)：图片、Markdown、Docs 样式、文章回读和索引同步；
+- [企业路由矩阵](plugins/human-internal-writing/skills/doc-writing-router/references/enterprise-route-matrix.md)：Kim、Docs、会议记录和发布能力的最小路由；
+- [公开仓库边界](plugins/human-internal-writing/skills/doc-writing-router/references/public-repo-boundary.md)：公共 GitHub 与企业运行时的隔离规则；
+- [文章与证据 Schema](schemas/)：让简报、Claim、审批和发布回执可被程序检查。
 
 ## 交付物契约
 
